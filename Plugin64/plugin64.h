@@ -1,40 +1,20 @@
-Ôªø#pragma once
+#pragma once
 
-#define NOMINMAX
-
-#include <windows.h>
-#include <cstdint>
-#include <cstddef>
-#include <fstream>
-#include <utility>
-#include <unordered_map>
-#include <string>
-#include <iterator>
-#include <algorithm>
-#include <utility>
-#include <cstring>
-#include <filesystem>
-#include <shlobj.h>
-#include <boost/utility/string_view.hpp>
-#include "include/injector/hooking.hpp"
-#include "include/injector/calling.hpp"
-#include "include/injector/assembly.hpp"
+#include "byte_pattern.h"
 
 #define VALIDATE_SIZE(type,size) static_assert(sizeof(type)==size, "Type size error.");
 
 struct IncompleteClass
 {
-    template <typename T, std::uintptr_t offset>
-    T *field()
-    {
-        return (T *)(reinterpret_cast<std::uintptr_t>(this) + offset);
-    }
+	template <typename T, std::uintptr_t offset>
+	T* field(){
+		return (T*)(reinterpret_cast<std::uintptr_t>(this) + offset);
+	}
 
-    template <typename T, std::uintptr_t offset>
-    T get_field()
-    {
-        return *(T *)(reinterpret_cast<std::uintptr_t>(this) + offset);
-    }
+	template <typename T, std::uintptr_t offset>
+	T get_field(){
+		return *(T*)(reinterpret_cast<std::uintptr_t>(this) + offset);
+	}
 };
 
 #define ESCAPE_SEQ_1 0x10
@@ -75,11 +55,8 @@ typedef struct {
 } V;
 
 typedef struct _runoption {
-	// „Éó„É≠„Ç∞„É©„É†„Éê„Éº„Ç∏„Éß„É≥
+	// ÉvÉçÉOÉâÉÄÉoÅ[ÉWÉáÉì
 	EU4Version version;
-	
-	// „ÉÜ„Çπ„Éà
-	boolean test;
 
 } RunOptions;
 
@@ -108,7 +85,7 @@ namespace Misc
 	EU4Version getVersion();
 	std::string versionString(EU4Version version);
 	errno_t init(EU4Version version);
-	void getOptionsByINI(RunOptions *options);
+	void getOptionsByINI(RunOptions* options);
 }
 
 namespace TextView

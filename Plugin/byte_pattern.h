@@ -75,9 +75,10 @@ class byte_pattern
     void bm_search();
 
     void debug_output() const;
-	void debug_output2(const std::string message) const;
+	
 
 public:
+	void debug_output2(const std::string message) const;
     static void start_log(const wchar_t *module_name);
     static void shutdown_log();
 
@@ -96,9 +97,10 @@ public:
 
     memory_pointer get(std::size_t index) const;
     memory_pointer get_first() const;
+	memory_pointer get_second() const;
 
     std::size_t count() const;
-    bool has_size(std::size_t expected) const;
+    bool has_size(std::size_t expected,std::string version) const;
     bool empty() const;
     void clear();
 
