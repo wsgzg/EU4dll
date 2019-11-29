@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define NOMINMAX
 
@@ -14,6 +14,7 @@
 #include <utility>
 #include <cstring>
 #include <filesystem>
+#include <shlobj.h>
 #include <boost/utility/string_view.hpp>
 #include "../include/injector/hooking.hpp"
 #include "../include/injector/calling.hpp"
@@ -35,3 +36,130 @@ struct IncompleteClass
         return *(T *)(reinterpret_cast<std::uintptr_t>(this) + offset);
     }
 };
+
+#define ESCAPE_SEQ_1 0x10
+#define ESCAPE_SEQ_2 0x11
+#define ESCAPE_SEQ_3 0x12
+#define ESCAPE_SEQ_4 0x13
+
+#define LOW_SHIFT 0x0E
+#define HIGH_SHIFT 0x9
+
+#define SHIFT_2 LOW_SHIFT
+#define SHIFT_3 0x900
+#define SHIFT_4 0x8F2
+
+#define NO_FONT 0x98F
+#define NOT_DEF 0x2026
+
+#define EU4_ERROR1 0x10000
+
+enum EU4Version {
+	UNKNOWN = 0,
+	v1_25_X = 125,
+	v1_26_X = 126,
+	v1_27_X = 127,
+	v1_28_X = 128,
+	v1_28_3 = 1283
+};
+
+union T {
+	char text[0x10];
+	char* p;
+};
+
+typedef struct {
+	union T t;
+	int len;
+	int len2;
+} V;
+
+typedef struct _runoption {
+	// プログラムバージョン
+	EU4Version version;
+	
+	// テスト
+	boolean test;
+
+} RunOptions;
+
+namespace Font
+{
+	errno_t init(EU4Version version);
+}
+
+namespace MapJustify
+{
+	errno_t init(EU4Version version);
+}
+
+namespace MapAdj
+{
+	errno_t init(EU4Version version);
+}
+
+namespace MapView
+{
+	errno_t init(EU4Version version);
+}
+
+namespace Misc
+{
+	EU4Version getVersion();
+	std::string versionString(EU4Version version);
+	errno_t init(EU4Version version);
+	void getOptionsByINI(RunOptions *options);
+}
+
+namespace TextView
+{
+	errno_t init(EU4Version version);
+}
+
+namespace Input
+{
+	errno_t init(EU4Version version);
+}
+
+namespace IME
+{
+	errno_t init(EU4Version version);
+}
+
+namespace ButtonAndToolTip
+{
+	errno_t init(EU4Version version);
+}
+
+namespace ToolTipApx {
+	errno_t init(EU4Version version);
+}
+
+namespace PopupCharOnMap {
+	errno_t init(EU4Version version);
+}
+
+namespace FileSave {
+	char* utf8ToEscapedStr(char* from);
+	errno_t init(EU4Version version);
+}
+
+namespace InputIssue19 {
+	errno_t init(EU4Version version);
+}
+
+namespace EventDialog {
+	errno_t init(EU4Version version);
+}
+
+namespace DateFormat {
+	errno_t init(EU4Version version);
+}
+
+namespace ListChars {
+	errno_t init(EU4Version version);
+}
+
+namespace NameOrder {
+	errno_t init(EU4Version version);
+}
